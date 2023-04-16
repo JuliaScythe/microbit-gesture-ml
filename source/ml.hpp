@@ -8,7 +8,9 @@
 #include <string.h>
 
 extern size_t MODEL_LOCATION;
-extern double output[3];
+extern float output[3];
+extern uint8_t* arena;
+
 
 typedef struct ml4f_header {
     uint32_t magic0;

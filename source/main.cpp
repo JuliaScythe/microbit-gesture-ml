@@ -68,6 +68,9 @@ int main()
     print("\n");
     print(ManagedString((int)(1000*output[2])));
     print("\nDone init\n");
+    print("Arena at ");
+    print(ManagedString((int) arena));
+    print("\n");
 
     while(true) {
         double x = uBit.accelerometer.getX() / 1000.0;
