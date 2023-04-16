@@ -140,6 +140,9 @@ if not options.test_platform:
         exit(0)
 
     build(options.clean, verbose=options.verbose)
+    #print("Augmenting Hex...")
+    #import add_model
+    #add_model.augment_hex()
     exit(0)
 
 for json_obj in test_json:
@@ -167,3 +170,5 @@ for json_obj in test_json:
         json.dump(config, codal_json, indent=4)
 
     build(True, True)
+    
+

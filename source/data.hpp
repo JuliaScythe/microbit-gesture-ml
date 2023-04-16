@@ -1,8 +1,6 @@
 #ifndef DATA_HPP_INCLUDED
 #define DATA_HPP_INCLUDED
 
-
-
 struct ProcessedData {
     double ax_max;
     double ax_min;
@@ -23,9 +21,6 @@ struct ProcessedData {
     double az_total;
 };
 
-ProcessedData processData(double &x, double &y, double &z) {
-    ProcessedData result;
-    
-}
+ProcessedData processData(double &x, double &y, double &z);
 
 #endif // DATA_HPP_INCLUDED

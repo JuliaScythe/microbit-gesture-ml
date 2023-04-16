@@ -1,4 +1,7 @@
 #include "MicroBit.h"
+#include "ml.hpp"
+
+void print(ManagedString s);
 
 MicroBit uBit;
 MicroBitDisplay *display;
@@ -26,9 +29,12 @@ int cIndex(int mappedIndex) {
 
 int prevDataPush(int x, int y, int z) {
     prevDataBufferHead = (prevDataBufferHead + 1) % numSamples;
+    print(ManagedString(prevDataBufferHead) + "\n");
     prevDataX[prevDataBufferHead] = x;
     prevDataY[prevDataBufferHead] = y;
     prevDataZ[prevDataBufferHead] = z;
+
+    return 0;
 }
 
 void print(ManagedString s) {
@@ -37,33 +43,37 @@ void print(ManagedString s) {
     }
 }
 
+void print(char* s, int l) {
+    for (int i=0; i<l; i++) {
+        uBit.serial.putc(s[i]);
+    }
+}
+
 int main()
 {
     uBit.init();
 
-    print(ManagedString("Started!"));
+    print("Started\n");
 
     smoothedX = uBit.accelerometer.getX() / 1000.0;
     smoothedY = uBit.accelerometer.getY() / 1000.0;
     smoothedZ = uBit.accelerometer.getZ() / 1000.0;
+    //microbit_panic( 123 );
+
+    print(MODEL_LOCATION, 8);
 
     while(true) {
         double x = uBit.accelerometer.getX() / 1000.0;
         double y = uBit.accelerometer.getY() / 1000.0;
         double z = uBit.accelerometer.getZ() / 1000.0;
-
         smoothedX = smoothedX*0.75 + x*0.25;
         smoothedY = smoothedY*0.75 + y*0.25;
         smoothedZ = smoothedZ*0.75 + z*0.25;
-
+        
         prevDataPush(x,y,z);
-
-
 
         uBit.sleep(1000 / samplesPerSecond);
     }
-
-    out_of_box_experience();
 
     microbit_panic( 999 );
 }

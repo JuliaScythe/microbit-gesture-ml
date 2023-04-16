@@ -1,0 +1,660 @@
+// total cycles: 2195 (0.034ms at 64MHz)
+    .cpu cortex-m4
+    .text
+    .arch armv7e-m
+    .syntax unified
+    .thumb
+    .thumb_func
+    .fpu fpv4-sp-d16
+// ABI: r0 -> points to magic, r1 -> points to RAM arena
+_header:
+.word 0x30470f62  // magic
+.word 0x46344c4d  // more magic; ML4F
+.word _start_model-_header // header size
+.word _end-_header // total size of compiled object
+.word _weights-_header // offset of weights
+.word 0 // no tests
+.word 0 // no tests
+.word 132 // arena size
+.word 8  // offset of input data
+.word 1 // input type - float32
+.word 8  // offset of output data
+.word 1 // output type - float32
+.word 0 // padding
+.word 0 // padding
+.word 0 // padding
+.word 0 // padding
+.word 15 // input shape
+.word 0 // end of input shape
+.word 3 // output shape
+.word 0 // end of output shape
+_start_model:
+push {r4,r5,r6,r7,r8,r9,r10,r11,r12,lr}
+mov r7, r1
+ldr r1, [r0, #4*4] // weight offset
+adds r1, r0 // weight addr
+str r1, [r7, #0]
+movs r1, #0
+str r1, [r7, #4]
+begin_0:
+// Layer: Dense; data: [15]@0 => [16]@15
+// 1302 cycles (13.8% opt)
+ldr r0, [r7, #0]
+mov r3, r0
+addw r2, r7, #68
+    movs r4, #16
+    .l.0:  // rep 16
+    vldm r3!, {s0}
+    addw r1, r7, #8
+    vldm r1!, {s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14}
+    vldm r3!, {s15,s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s26,s27,s28}
+    vmul.f32 s1, s1, s15
+    vmul.f32 s2, s2, s16
+    vadd.f32 s0, s0, s1
+    vmul.f32 s3, s3, s17
+    vadd.f32 s0, s0, s2
+    vmul.f32 s4, s4, s18
+    vadd.f32 s0, s0, s3
+    vmul.f32 s5, s5, s19
+    vadd.f32 s0, s0, s4
+    vmul.f32 s6, s6, s20
+    vadd.f32 s0, s0, s5
+    vmul.f32 s7, s7, s21
+    vadd.f32 s0, s0, s6
+    vmul.f32 s8, s8, s22
+    vadd.f32 s0, s0, s7
+    vmul.f32 s9, s9, s23
+    vadd.f32 s0, s0, s8
+    vmul.f32 s10, s10, s24
+    vadd.f32 s0, s0, s9
+    vmul.f32 s11, s11, s25
+    vadd.f32 s0, s0, s10
+    vmul.f32 s12, s12, s26
+    vadd.f32 s0, s0, s11
+    vmul.f32 s13, s13, s27
+    vadd.f32 s0, s0, s12
+    vmul.f32 s14, s14, s28
+    vadd.f32 s0, s0, s13
+    vadd.f32 s0, s0, s14
+    vldm r1!, {s1}
+    vldm r3!, {s15}
+    vmul.f32 s1, s1, s15
+    vadd.f32 s0, s0, s1
+    vstm r2!, {s0}
+    subs r4, #1
+    bne .l.0
+addw r2, r7, #68
+ldr r0, [r2, #0]
+cmp r0, #0
+it lt
+movwlt r0, #0
+stm r2!, {r0}
+ldr r0, [r2, #0]
+cmp r0, #0
+it lt
+movwlt r0, #0
+stm r2!, {r0}
+ldr r0, [r2, #0]
+cmp r0, #0
+it lt
+movwlt r0, #0
+stm r2!, {r0}
+ldr r0, [r2, #0]
+cmp r0, #0
+it lt
+movwlt r0, #0
+stm r2!, {r0}
+ldr r0, [r2, #0]
+cmp r0, #0
+it lt
+movwlt r0, #0
+stm r2!, {r0}
+ldr r0, [r2, #0]
+cmp r0, #0
+it lt
+movwlt r0, #0
+stm r2!, {r0}
+ldr r0, [r2, #0]
+cmp r0, #0
+it lt
+movwlt r0, #0
+stm r2!, {r0}
+ldr r0, [r2, #0]
+cmp r0, #0
+it lt
+movwlt r0, #0
+stm r2!, {r0}
+ldr r0, [r2, #0]
+cmp r0, #0
+it lt
+movwlt r0, #0
+stm r2!, {r0}
+ldr r0, [r2, #0]
+cmp r0, #0
+it lt
+movwlt r0, #0
+stm r2!, {r0}
+ldr r0, [r2, #0]
+cmp r0, #0
+it lt
+movwlt r0, #0
+stm r2!, {r0}
+ldr r0, [r2, #0]
+cmp r0, #0
+it lt
+movwlt r0, #0
+stm r2!, {r0}
+ldr r0, [r2, #0]
+cmp r0, #0
+it lt
+movwlt r0, #0
+stm r2!, {r0}
+ldr r0, [r2, #0]
+cmp r0, #0
+it lt
+movwlt r0, #0
+stm r2!, {r0}
+ldr r0, [r2, #0]
+cmp r0, #0
+it lt
+movwlt r0, #0
+stm r2!, {r0}
+ldr r0, [r2, #0]
+cmp r0, #0
+it lt
+movwlt r0, #0
+stm r2!, {r0}
+end_0:
+begin_1:
+// Layer: Dense; data: [16]@15 => [3]@0
+// 893 cycles (2.9% opt)
+ldr r0, [r7, #0]
+addw r3, r0, #1024
+addw r2, r7, #8
+    movs r4, #3
+    .l.1:  // rep 3
+    vldm r3!, {s0}
+    addw r1, r7, #68
+    vldm r1!, {s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14}
+    vldm r3!, {s15,s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s26,s27,s28}
+    vmul.f32 s1, s1, s15
+    vmul.f32 s2, s2, s16
+    vadd.f32 s0, s0, s1
+    vmul.f32 s3, s3, s17
+    vadd.f32 s0, s0, s2
+    vmul.f32 s4, s4, s18
+    vadd.f32 s0, s0, s3
+    vmul.f32 s5, s5, s19
+    vadd.f32 s0, s0, s4
+    vmul.f32 s6, s6, s20
+    vadd.f32 s0, s0, s5
+    vmul.f32 s7, s7, s21
+    vadd.f32 s0, s0, s6
+    vmul.f32 s8, s8, s22
+    vadd.f32 s0, s0, s7
+    vmul.f32 s9, s9, s23
+    vadd.f32 s0, s0, s8
+    vmul.f32 s10, s10, s24
+    vadd.f32 s0, s0, s9
+    vmul.f32 s11, s11, s25
+    vadd.f32 s0, s0, s10
+    vmul.f32 s12, s12, s26
+    vadd.f32 s0, s0, s11
+    vmul.f32 s13, s13, s27
+    vadd.f32 s0, s0, s12
+    vmul.f32 s14, s14, s28
+    vadd.f32 s0, s0, s13
+    vadd.f32 s0, s0, s14
+    vldm r1!, {s1,s2}
+    vldm r3!, {s15,s16}
+    vmul.f32 s1, s1, s15
+    vmul.f32 s2, s2, s16
+    vadd.f32 s0, s0, s1
+    vadd.f32 s0, s0, s2
+    vstm r2!, {s0}
+    subs r4, #1
+    bne .l.1
+addw r2, r7, #8
+mov r0, r2
+movs r1, #3
+bl softmax
+end_1:
+pop {r4,r5,r6,r7,r8,r9,r10,r11,r12,pc}
+
+softmax:
+	cmp	r1, #1
+	push	{r3, r4, r5, lr}
+	vldr.32	s5, [r0]
+	bls	.L13
+	adds	r3, r0, #4
+	add	r2, r0, r1, lsl #2
+.L16:
+	vldmia.32	r3!, {s15}
+	vcmp.f32	s15, s5
+	vmrs	APSR_nzcv, FPSCR
+	it	gt
+	vmovgt.f32	s5, s15
+	cmp	r2, r3
+	bne	.L16
+.L17:
+	movs	r4, #0
+	vmov	s4, r4
+	mov	r5, r0
+.L19:
+	vldr.32	s0, [r5]
+	vsub.f32	s0, s0, s5
+	bl	expf_asm
+	adds	r4, #1
+	cmp	r1, r4
+	vadd.f32	s4, s4, s0
+	vstmia.32	r5!, {s0}
+	bhi	.L19
+	movs	r3, #0
+.L20:
+	vldr.32	s14, [r0]
+	vdiv.f32	s15, s14, s4
+	adds	r3, #1
+	cmp	r1, r3
+	vstmia.32	r0!, {s15}
+	bhi	.L20
+	pop	{r3, r4, r5, pc}
+.L13:
+	cmp	r1, #0
+	bne	.L17
+	pop	{r3, r4, r5, pc}
+
+
+// based on https://stackoverflow.com/questions/29381117
+expf_asm:
+	vldr.32	s15, .L10
+	vcmpe.f32	s0, s15
+	vmrs	APSR_nzcv, FPSCR
+	bmi	.L5
+	vldr.32	s15, .L10+4
+	vcmpe.f32	s0, s15
+	vmrs	APSR_nzcv, FPSCR
+	bgt	.L9
+	vldr.32	s15, .L10+8
+	vldr.32	s9, .L10+12
+	vldr.32	s6, .L10+16
+	vldr.32	s7, .L10+20
+	vldr.32	s10, .L10+24
+	vldr.32	s8, .L10+28
+	vldr.32	s11, .L10+32
+	vldr.32	s12, .L10+36
+	vldr.32	s13, .L10+40
+	vmul.f32	s15, s0, s15
+	vmov.f32	s14, #1.0
+	vadd.f32	s15, s15, s9
+	vsub.f32	s15, s15, s9
+	vfma.f32	s0, s15, s6
+	vcvt.s32.f32	s9, s15
+	vfma.f32	s0, s15, s7
+	vmov.f32	s15, s10
+	vfma.f32	s15, s8, s0
+	vmov	r3, s9	// int
+	vfma.f32	s11, s15, s0
+	vfma.f32	s12, s11, s0
+	vfma.f32	s13, s12, s0
+	vmov.f32	s15, s13
+	vmov.f32	s13, s14
+	vfma.f32	s13, s15, s0
+	vfma.f32	s14, s13, s0
+	vmov	r2, s14	// int
+	add	r3, r2, r3, lsl #23
+	vmov	s0, r3	// int
+	bx	lr
+.L9:
+	vldr.32	s15, .L10+44
+	vmov.f32	s14, #1.0
+	vdiv.f32	s0, s14, s15
+	bx	lr
+.L5:
+	vldr.32	s0, .L10+44
+	bx	lr
+.L11:
+	.align	2
+.L10:
+	.word	3265921024
+	.word	1118699520
+	.word	1069066811
+	.word	1262485504
+	.word	3207688704
+	.word	3049242254
+	.word	1007234926
+	.word	984915968
+	.word	1026207149
+	.word	1042983464
+	.word	1056964603
+	.word	0
+
+.balign 4
+_weights:
+.float 0.2924405038356781
+.float -0.027521051466464996
+.float 0.690209150314331
+.float -0.17678305506706238
+.float -0.13450399041175842
+.float 0.09367987513542175
+.float 0.3600274920463562
+.float 0.1483100801706314
+.float 0.012211584486067295
+.float -0.07587181031703949
+.float 0.3453824818134308
+.float -0.23549416661262512
+.float 0.2633964419364929
+.float -0.03502216190099716
+.float -0.18252752721309662
+.float -0.27274394035339355
+.balign 4
+.float -0.04168619215488434
+.float -0.06384985148906708
+.float -0.13631010055541992
+.float -0.2222914695739746
+.float 0.02274450659751892
+.float 0.3616332709789276
+.float 0.38195300102233887
+.float 0.06017556041479111
+.float -0.2610652446746826
+.float -0.23440314829349518
+.float 0.14899930357933044
+.float -0.30069035291671753
+.float -0.3322061598300934
+.float 0.020389001816511154
+.float -0.29334020614624023
+.float -0.1722785085439682
+.balign 4
+.float 0
+.float -0.07788275927305222
+.float -0.3515075743198395
+.float 0.08588756620883942
+.float -0.08129251003265381
+.float 0.04367018863558769
+.float -0.24945107102394104
+.float 0.075373075902462
+.float -0.07990492880344391
+.float -0.0076287309639155865
+.float 0.27469566464424133
+.float -0.42930498719215393
+.float -0.24791081249713898
+.float 0.37016499042510986
+.float -0.1925358921289444
+.float 0.10496436804533005
+.balign 4
+.float 0.0986461341381073
+.float 0.3969097435474396
+.float 0.24613343179225922
+.float -0.2801084816455841
+.float -0.34495535492897034
+.float 0.09589065611362457
+.float -0.21378493309020996
+.float 0.4987131953239441
+.float -0.14401398599147797
+.float -0.2635951638221741
+.float -0.5061036348342896
+.float 0.38338369131088257
+.float 0.04310193657875061
+.float -0.026997124776244164
+.float 0.019980592653155327
+.float 0.007226866204291582
+.balign 4
+.float 0.04960224777460098
+.float -0.1974204182624817
+.float -0.1134747788310051
+.float -0.01816602610051632
+.float -0.3127659857273102
+.float 0.33973267674446106
+.float 0.5128743648529053
+.float -0.05343688279390335
+.float 0.14414480328559875
+.float -0.27610892057418823
+.float 0.1837465912103653
+.float 0.11500810086727142
+.float -0.17248834669589996
+.float -0.19985347986221313
+.float -0.20329241454601288
+.float -0.09060439467430115
+.balign 4
+.float 0.47011440992355347
+.float -0.3822338581085205
+.float 0.41683948040008545
+.float 0.1970759779214859
+.float 0.020233746618032455
+.float 0.19791696965694427
+.float -0.314451664686203
+.float 0.6969204545021057
+.float -0.22391235828399658
+.float -0.23147425055503845
+.float 0.07738695293664932
+.float -0.037851810455322266
+.float 0.6567622423171997
+.float -0.007808019407093525
+.float -0.11715555936098099
+.float 0.05777301639318466
+.balign 4
+.float 0
+.float -0.26511526107788086
+.float 0.10304923355579376
+.float 0.1615869253873825
+.float -0.03863467276096344
+.float -0.14936910569667816
+.float -0.41573795676231384
+.float -0.2567800283432007
+.float -0.030022528022527695
+.float 0.07175122946500778
+.float 0.053451914340257645
+.float -0.07693257927894592
+.float -0.4184226989746094
+.float -0.10776832699775696
+.float 0.12039897590875626
+.float 0.052310511469841
+.balign 4
+.float 0.29466432332992554
+.float -0.2518347203731537
+.float 0.3749034106731415
+.float -0.1727059781551361
+.float 0.2151210904121399
+.float -0.06416869908571243
+.float -0.1025998666882515
+.float 0.49228915572166443
+.float 0.23078154027462006
+.float 0.017151998355984688
+.float -0.3655621409416199
+.float 0.1173173114657402
+.float 0.6553075909614563
+.float -0.23363670706748962
+.float -0.17675407230854034
+.float -0.17261286079883575
+.balign 4
+.float -0.000056552373280283064
+.float 0.24194371700286865
+.float -0.4741767644882202
+.float 0.31958964467048645
+.float 0.15773744881153107
+.float 0.3051433861255646
+.float -0.4105229079723358
+.float -0.2049523890018463
+.float 0.09333868324756622
+.float 0.023872829973697662
+.float -0.06820020079612732
+.float -0.389975368976593
+.float -0.01087228674441576
+.float 0.04872133210301399
+.float -0.364309698343277
+.float -0.03321150317788124
+.balign 4
+.float -0.03351746127009392
+.float -0.1168871596455574
+.float -0.03856410086154938
+.float 0.06642196327447891
+.float -0.21976011991500854
+.float 0.09425189346075058
+.float 0.3019702434539795
+.float 0.030060306191444397
+.float -0.26241469383239746
+.float -0.2826290726661682
+.float 0.0363883376121521
+.float -0.23642292618751526
+.float 0.04233697056770325
+.float 0.14254216849803925
+.float 0.19795407354831696
+.float -0.27912744879722595
+.balign 4
+.float 0.1707659214735031
+.float 0.03337741270661354
+.float 0.7695455551147461
+.float 0.36630550026893616
+.float 0.13245455920696259
+.float 0.06645787507295609
+.float 0.07555048167705536
+.float 0.4720045328140259
+.float -0.10130812227725983
+.float -0.28444159030914307
+.float -0.3540423512458801
+.float -0.10503661632537842
+.float 0.35452553629875183
+.float -0.16534635424613953
+.float -0.47944632172584534
+.float 0.07378612458705902
+.balign 4
+.float 0.1626616269350052
+.float 0.19942548871040344
+.float -0.11454509943723679
+.float 0.029644077643752098
+.float 0.7590117454528809
+.float 0.05441288650035858
+.float 0.27776262164115906
+.float -0.3257034420967102
+.float 0.11887898296117783
+.float -0.12605439126491547
+.float 0.2643415331840515
+.float 0.9044244289398193
+.float -0.08772996813058853
+.float 1.0488768815994263
+.float 0.02928626909852028
+.float 0.4141536056995392
+.balign 4
+.float 0
+.float -0.13895925879478455
+.float -0.06613743305206299
+.float -0.1667405515909195
+.float 0.4773676097393036
+.float -0.3653169274330139
+.float -0.32796281576156616
+.float 0.07514151930809021
+.float 0.3603194057941437
+.float 0.13685005903244019
+.float 0.21047109365463257
+.float -0.09203177690505981
+.float -0.35534846782684326
+.float -0.07008999586105347
+.float 0.11893616616725922
+.float -0.16813693940639496
+.balign 4
+.float 0.18988269567489624
+.float -0.034482017159461975
+.float 0.3616781234741211
+.float -0.3543751835823059
+.float 0.22695454955101013
+.float -0.022659998387098312
+.float -0.2307177484035492
+.float 0.2761229872703552
+.float 0.11999134719371796
+.float 0.11948084086179733
+.float -0.2246793657541275
+.float -0.06660027801990509
+.float 0.418674111366272
+.float -0.28583309054374695
+.float 0.3265044093132019
+.float 0.20798975229263306
+.balign 4
+.float 0.32838934659957886
+.float 0.23324038088321686
+.float 0.6594176888465881
+.float 0.6311624646186829
+.float -0.5270925760269165
+.float 0.468191921710968
+.float 0.3980706036090851
+.float -0.2425248622894287
+.float 0.6530002951622009
+.float 0.28710564970970154
+.float 0.7367668151855469
+.float -0.6491812467575073
+.float -0.10212883353233337
+.float -0.6463273763656616
+.float -0.08723200857639313
+.float -1.3571476936340332
+.balign 4
+.float -0.060341767966747284
+.float -0.09007410705089569
+.float -0.10498181730508804
+.float -0.1769496202468872
+.float -0.1774510145187378
+.float 0.023718370124697685
+.float 0.1687069833278656
+.float 0.40974342823028564
+.float -0.2317148745059967
+.float -0.20869243144989014
+.float 0.06878236681222916
+.float 0.04810366407036781
+.float -0.13570722937583923
+.float 0.07263390719890594
+.float -0.24432283639907837
+.float -0.2126501351594925
+.balign 4
+.float -0.4956273138523102
+.float 0.7374815344810486
+.float 0.25991290807724
+.float 0.12821675837039948
+.float 0.19665542244911194
+.float 0.1329847127199173
+.float 0.8855566382408142
+.float 0.33381518721580505
+.float 0.5700200200080872
+.float 0.17937371134757996
+.float 0.01564054749906063
+.float 0.45653221011161804
+.float -0.6604619026184082
+.float -0.3776884377002716
+.float 0.3571195602416992
+.float -0.7142342925071716
+.float -0.011140242218971252
+.balign 4
+.float 0.5366450548171997
+.float -0.5283435583114624
+.float 0.5070394277572632
+.float -0.050105731934309006
+.float -0.42905393242836
+.float -0.13795068860054016
+.float -0.6599202752113342
+.float -0.23313097655773163
+.float -0.20434850454330444
+.float -0.0855560153722763
+.float 0.08833100646734238
+.float -0.7348995804786682
+.float 1.2411155700683594
+.float 0.3002726435661316
+.float -0.7196076512336731
+.float -1.5211669206619263
+.float 0.35806629061698914
+.balign 4
+.float -0.0410178005695343
+.float 0.48814791440963745
+.float -0.4559018611907959
+.float -0.3095605969429016
+.float -0.2681159973144531
+.float 0.4238226115703583
+.float -0.6107501983642578
+.float 0.1325201392173767
+.float -0.784207820892334
+.float -0.3873501121997833
+.float -0.017867494374513626
+.float -0.24870465695858002
+.float -0.37802380323410034
+.float -0.3259136974811554
+.float -0.20448212325572968
+.float 1.553062915802002
+.float -0.19282490015029907
+.balign 4
+
+_end:
