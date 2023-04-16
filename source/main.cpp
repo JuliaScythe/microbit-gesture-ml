@@ -60,7 +60,14 @@ int main()
     smoothedZ = uBit.accelerometer.getZ() / 1000.0;
     //microbit_panic( 123 );
 
-    print(MODEL_LOCATION, 8);
+    ProcessedData test_data;
+    categorise(test_data);
+    print(ManagedString((int)(1000*output[0])));
+    print("\n");
+    print(ManagedString((int)(1000*output[1])));
+    print("\n");
+    print(ManagedString((int)(1000*output[2])));
+    print("\nDone init\n");
 
     while(true) {
         double x = uBit.accelerometer.getX() / 1000.0;
