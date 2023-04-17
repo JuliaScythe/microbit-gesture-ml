@@ -32,7 +32,9 @@ static float prevDataX[numSamples];
 static float prevDataY[numSamples];
 static float prevDataZ[numSamples];
 
-ProcessedData processData(float &x, float &y, float &z);
+ProcessedData processData(float *x, float *y, float *z);
+
+void prevDataPush(int x, int y, int z);
 
 float mean(float* data);
 float stdDev(float* data);

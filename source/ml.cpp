@@ -109,7 +109,7 @@ int categorise(ProcessedData data)
 typedef void (*model_fn_t)(const ml4f_header_t *model, uint8_t *arena);
 
 int invoke(const ml4f_header_t *model, uint8_t *arena) {
-    model_fn_t fn = (model_fn_t)((const uint8_t *)model + model->header_size + 1);
-    fn(model, arena);
+    volatile model_fn_t fn = (model_fn_t)((const uint8_t *)model + model->header_size + 1);
+    //fn(model, arena);
     return 0;
 }

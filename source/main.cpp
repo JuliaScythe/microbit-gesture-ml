@@ -18,16 +18,6 @@ int cIndex(int mappedIndex) {
     return (mappedIndex + prevDataBufferHead) % numSamples;
 }
 
-int prevDataPush(int x, int y, int z) {
-    prevDataBufferHead = (prevDataBufferHead + 1) % numSamples;
-    print(ManagedString(prevDataBufferHead) + ".");
-    prevDataX[prevDataBufferHead] = x;
-    prevDataY[prevDataBufferHead] = y;
-    prevDataZ[prevDataBufferHead] = z;
-
-    return 0;
-}
-
 inline void print(ManagedString s) {
     for (int i=0; i<s.length(); i++) {
         uBit.serial.putc(s.charAt(i));
@@ -57,10 +47,9 @@ int main()
     smoothedX = uBit.accelerometer.getX() / 1000.0;
     smoothedY = uBit.accelerometer.getY() / 1000.0;
     smoothedZ = uBit.accelerometer.getZ() / 1000.0;
-    //microbit_panic( 123 );
 
     ProcessedData test_data;
-    categorise(test_data);
+    //categorise(test_data);
     int data1 = 1000*output[0];
 
 
@@ -83,7 +72,10 @@ int main()
     data1++;
     print(data1);
 
+    int counter = 0;
+
     while(true) {
+
         double x = uBit.accelerometer.getX() / 1000.0;
         double y = uBit.accelerometer.getY() / 1000.0;
         double z = uBit.accelerometer.getZ() / 1000.0;
@@ -91,10 +83,17 @@ int main()
         smoothedY = smoothedY*0.75 + y*0.25;
         smoothedZ = smoothedZ*0.75 + z*0.25;
         
+        prevDataX[1] = 5.0;
+
         prevDataPush(x,y,z);
 
-        categorise(test_data);
+        print(counter);                
 
+        if (counter++ > 59) {
+            print(".\n");
+            ProcessedData data = processData(prevDataX,prevDataY,prevDataZ);
+            categorise(data);
+        }
 
         uBit.sleep(1000 / samplesPerSecond);
     }
