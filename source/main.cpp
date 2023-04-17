@@ -1,5 +1,6 @@
 #include "MicroBit.h"
 #include "ml.hpp"
+#include <cstdio>
 
 void print(ManagedString s);
 
@@ -10,16 +11,6 @@ double smoothedX;
 double smoothedY;
 double smoothedZ;
 
-// Should be kept in sync with the ml-machine settings
-const int numSamples = 60;
-const int samplesPerSecond = 4;
-
-// We'll use these as a circular buffer to store past data
-int prevDataBufferHead = 0; // the index of the next point to write data to
-double prevDataX[numSamples];
-double prevDataY[numSamples];
-double prevDataZ[numSamples];
-
 /*
     Converts a 0-60 index into the index space of the circular buffer
 */
@@ -29,7 +20,7 @@ int cIndex(int mappedIndex) {
 
 int prevDataPush(int x, int y, int z) {
     prevDataBufferHead = (prevDataBufferHead + 1) % numSamples;
-    print(ManagedString(prevDataBufferHead) + "\n");
+    print(ManagedString(prevDataBufferHead) + ".");
     prevDataX[prevDataBufferHead] = x;
     prevDataY[prevDataBufferHead] = y;
     prevDataZ[prevDataBufferHead] = z;
@@ -37,23 +28,31 @@ int prevDataPush(int x, int y, int z) {
     return 0;
 }
 
-void print(ManagedString s) {
+inline void print(ManagedString s) {
     for (int i=0; i<s.length(); i++) {
         uBit.serial.putc(s.charAt(i));
     }
 }
 
-void print(char* s, int l) {
+
+inline void print(char* s, int l) {
     for (int i=0; i<l; i++) {
         uBit.serial.putc(s[i]);
     }
+}
+
+
+inline void print(int i) {
+    char buf[10];
+    int n=snprintf(buf, 10, "%d", i);
+    print(buf,n);
 }
 
 int main()
 {
     uBit.init();
 
-    print("Started\n");
+    print("======================= BOOT =======================\n");
 
     smoothedX = uBit.accelerometer.getX() / 1000.0;
     smoothedY = uBit.accelerometer.getY() / 1000.0;
@@ -62,7 +61,16 @@ int main()
 
     ProcessedData test_data;
     categorise(test_data);
-    print(ManagedString((int)(1000*output[0])));
+    int data1 = 1000*output[0];
+
+
+    ManagedString s = ManagedString(data1);
+    for (int i=0; i<s.length(); i++) {
+        uBit.serial.putc(s.charAt(i));
+    }
+
+    print("\n");
+    print(data1);
     print("\n");
     print(ManagedString((int)(1000*output[1])));
     print("\n");
@@ -71,6 +79,9 @@ int main()
     print("Arena at ");
     print(ManagedString((int) arena));
     print("\n");
+
+    data1++;
+    print(data1);
 
     while(true) {
         double x = uBit.accelerometer.getX() / 1000.0;
@@ -82,9 +93,13 @@ int main()
         
         prevDataPush(x,y,z);
 
+        categorise(test_data);
+
+
         uBit.sleep(1000 / samplesPerSecond);
     }
 
+    release_fiber();
     microbit_panic( 999 );
 }
 
