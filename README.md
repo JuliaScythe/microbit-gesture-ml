@@ -1,3 +1,9 @@
+# Development 
+
+```
+./build.py && python3 add_model.py && pyocd erase --mass && pyocd flash MICROBIT2.hex
+```
+
 # microbit-v2-samples
 
 [![Native Build Status](https://github.com/lancaster-university/microbit-v2-samples/actions/workflows/build.yml/badge.svg)](https://github.com/lancaster-university/microbit-v2-samples/actions/workflows/build.yml) [![Docker Build Status](https://github.com/lancaster-university/microbit-v2-samples/actions/workflows/docker-image.yml/badge.svg)](https://github.com/lancaster-university/microbit-v2-samples/actions/workflows/docker-image.yml)

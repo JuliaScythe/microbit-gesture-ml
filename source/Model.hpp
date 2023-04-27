@@ -4,7 +4,11 @@
 #include "DataReader.hpp"
 #include <cinttypes>
 
+
+
+
 struct ModelHeader {
+
     uint32_t magic0;
     uint32_t magic1;
     uint32_t header_size;
@@ -26,6 +30,7 @@ public:
     Model();
     ~Model();
     int classify(ProcessedData data);
+    NormData *normData;
 
 private:
     uint8_t *arena;
@@ -35,7 +40,7 @@ private:
 };
 
 
-
+/*
 const unsigned model_data[548] = {
     0x30470f62, 0x46344c4d, 0x00000050, 0x00000888, 0x000003bc, 0x00000000, 0x00000000, 0x00000084, 
     0x00000008, 0x00000001, 0x00000008, 0x00000001, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 
@@ -107,6 +112,6 @@ const unsigned model_data[548] = {
     0x3e07b35c, 0xbf48c1d8, 0xbec652c1, 0xbc925eda, 0xbe7eac6f, 0xbec18c56, 0xbea6de29, 0xbe5163c3, 
     0x3fc6cac4, 0xbe4573e4, 0x00000000, 0x00000000, 
 };
-
+*/
 
 #endif

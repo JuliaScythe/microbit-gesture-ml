@@ -1,6 +1,6 @@
 #include "DataReader.hpp"
 
-DataReader::DataReader(int samples, codal::Accelerometer *source) {
+DataReader::DataReader(int samples, codal::Accelerometer *source, NormData* normdata) {
 
     this->source = source;
     this->numSamples = samples;
@@ -12,6 +12,10 @@ DataReader::DataReader(int samples, codal::Accelerometer *source) {
     this->sampleHead = 0;
 
     this->dataReady = false;
+
+    this->normdata = normdata;
+    print((int) this->normdata);
+
 }
 
 DataReader::~DataReader() {
@@ -75,7 +79,8 @@ bool DataReader::isDataReady()
 ProcessedData DataReader::normalizeData(ProcessedData input)
 {
     for (int i=0; i < 15; i++) {
-        input.data[i] = normalize(input.data[i], norm_maxs[i], norm_mins[i]);
+        //input.data[i] = normalize(input.data[i], norm_maxs[i], norm_mins[i]);
+        input.data[i] = normalize(input.data[i], this->normdata->norm_max[i], this->normdata->norm_min[i]);
     }
 
     return input;

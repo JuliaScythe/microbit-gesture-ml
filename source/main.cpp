@@ -14,14 +14,14 @@ const int SAMPLEDELAY = 1000 / 30;
 int main() {
     uBit.init();
     setMicroBit(&uBit);
+    print("Initializing...\n");
 
-    DataReader r = DataReader(SAMPLES, &uBit.accelerometer);
     Model m = Model();
+    DataReader r = DataReader(SAMPLES, &uBit.accelerometer, m.normData);
 
     while(true) {
         r.takeSample();
         if(r.isDataReady()) {
-            print("\nData Ready!\n");
             m.classify(r.getProcessedData());
         }
         uBit.sleep(SAMPLEDELAY);

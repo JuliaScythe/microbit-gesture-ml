@@ -4,6 +4,11 @@
 #include "util.hpp"
 #include <vector>
 
+struct NormData {
+    float norm_max[15];
+    float norm_min[15];
+};
+
 struct ProcessedData {
     union {
         struct {
@@ -34,7 +39,7 @@ struct ProcessedData {
 
 class DataReader {
 public:
-    DataReader(int samples, codal::Accelerometer *source);
+    DataReader(int samples, codal::Accelerometer *source, NormData *normdata);
     ~DataReader();
     ProcessedData getProcessedData();
     void takeSample();
@@ -43,6 +48,8 @@ public:
 
 private:
     codal::Accelerometer* source;
+
+    NormData* normdata;
 
     int numSamples;
     int sampleHead;
@@ -53,9 +60,10 @@ private:
     float* samplesY;
     float* samplesZ;
 
-    static ProcessedData normalizeData(ProcessedData input);
+    ProcessedData normalizeData(ProcessedData input);
 };
 
+/*
 const float norm_mins[15] = {
     -0.06800000000001666,
     -2.040000000000049,
@@ -91,7 +99,7 @@ const float norm_maxs[15] = {
     7,
     152.6120000000001
 };
-
+*/
 
 
 #endif

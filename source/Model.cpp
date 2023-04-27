@@ -1,8 +1,15 @@
 #include "Model.hpp"
 
+const int* NORM_BASE = (int*) 0x40000;
+const int* MODEL_BASE = (int*) 0x40078;
+
 Model::Model() {
 
-    this->header = (ModelHeader*) model_data; // who needs type safety anyway
+    //this->header = (ModelHeader*) model_data; // who needs type safety anyway
+    
+    this->normData = (NormData*) NORM_BASE;
+    this->header = (ModelHeader*) (MODEL_BASE);
+
     
     if (this->header->magic0 != 0x30470f62) {
         microbit_panic(701);
