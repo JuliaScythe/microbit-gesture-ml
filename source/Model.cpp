@@ -42,9 +42,20 @@ int Model::classify(ProcessedData data)
     print(" b: "); print((int)(output[1]*10000.0));
     print(" c: "); print((int)(output[2]*10000.0));
 
-    return 0;
+    int maxi = -1;
+    float max = -1;
+    for (int i=0; i<3; i++) {
+        if (output[i] > max) {
+            maxi = i; max = output[i];
+        }
+    }
+
+    return maxi;
 }
 
+/**
+ * For use in debugging 
+ */
 void Model::dump(ProcessedData data) {
 
     print("\n\n\n>>>>>>>> X <<<<<<<<");

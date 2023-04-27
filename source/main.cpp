@@ -19,10 +19,17 @@ int main() {
     Model m = Model();
     DataReader r = DataReader(SAMPLES, &uBit.accelerometer, m.normData);
 
+    uBit.display.printChar('!');
+
     while(true) {
         r.takeSample();
         if(r.isDataReady()) {
-            m.classify(r.getProcessedData());
+            int result = m.classify(r.getProcessedData());
+
+            char buf[3];
+            snprintf(buf, 3, "%d", result);
+
+            uBit.display.printChar(buf[0]);
         }
         uBit.sleep(SAMPLEDELAY);
     }
