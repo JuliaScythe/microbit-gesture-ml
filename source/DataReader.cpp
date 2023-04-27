@@ -28,23 +28,23 @@ ProcessedData DataReader::getProcessedData()
     
     result.ax_max = max(this->samplesX, this->numSamples);
     result.ax_min = min(this->samplesX, this->numSamples);
-    result.ax_peaks = peaks(this->samplesX, this->numSamples);
+    result.ax_peaks = peaks(this->samplesX, this->numSamples, this->sampleHead);
     result.ax_std = stdDev(this->samplesX, this->numSamples);
     result.ax_total = sum(this->samplesX, this->numSamples);
 
     result.ay_max = max(this->samplesY, this->numSamples);
     result.ay_min = min(this->samplesY, this->numSamples);
-    result.ay_peaks = peaks(this->samplesY, this->numSamples);
+    result.ay_peaks = peaks(this->samplesY, this->numSamples, this->sampleHead);
     result.ay_std = stdDev(this->samplesY, this->numSamples);
     result.ay_total = sum(this->samplesY, this->numSamples);
 
     result.az_max = max(this->samplesZ, this->numSamples);
     result.az_min = min(this->samplesZ, this->numSamples);
-    result.az_peaks = peaks(this->samplesZ, this->numSamples);
+    result.az_peaks = peaks(this->samplesZ, this->numSamples, this->sampleHead);
     result.az_std = stdDev(this->samplesZ, this->numSamples);
     result.az_total = sum(this->samplesZ, this->numSamples);
 
-    return result;
+    return normalizeData(result);
 }
 
 void DataReader::takeSample() {
@@ -70,4 +70,13 @@ void DataReader::takeSample() {
 bool DataReader::isDataReady()
 {
     return this->dataReady;
+}
+
+ProcessedData DataReader::normalizeData(ProcessedData input)
+{
+    for (int i=0; i < 15; i++) {
+        input.data[i] = normalize(input.data[i], norm_maxs[i], norm_mins[i]);
+    }
+
+    return input;
 }

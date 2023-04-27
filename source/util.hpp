@@ -17,7 +17,9 @@ float totalAccel(float* data, int length);
 float sum(float* data, int length);
 float min(float* data, int length);
 float max(float* data, int length);
-int peaks(float* data, int length);
+int peaks(float* data, int length, int currentHead);
+
+float normalize(float x, float max, float min);
 
 
 #endif

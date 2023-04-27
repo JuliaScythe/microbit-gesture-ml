@@ -83,8 +83,20 @@ float max(float *data, int length) {
     return max;
 }
 
-int peaks(float *data, int length)
+int peaks(float *data, int length, int currentHead)
 {
     //TODO
+
+    // note for tri -- when indexing the array, to get the data in the right order you need to add currentHead to the array index mod length.
+    // since data is a circular buffer
+    // we don't do this anywhere else in the file since this is the only place where the order of the data matters.
+     
     return 0;
+}
+
+float normalize(float x, float max, float min)
+{
+    if(max == min) return 0;
+    
+    return (x-min)/(max-min);
 }
