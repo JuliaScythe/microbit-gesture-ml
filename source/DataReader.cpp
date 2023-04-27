@@ -60,11 +60,11 @@ void DataReader::takeSample() {
     if(sampleHead == 0) this->dataReady = true; // If we've done a full cycle of the buffer
 
 
-    print("\n x: "); print(x);
+    /*print("\n x: "); print(x);
     print(" y: "); print(y);
     print(" z: "); print(z);
     print(" head: "); print(this->sampleHead);
-    print(" ready? "); print(this->dataReady ? "yes" : "no");
+    print(" ready? "); print(this->dataReady ? "yes" : "no");*/
 }
 
 bool DataReader::isDataReady()
