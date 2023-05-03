@@ -85,14 +85,45 @@ float max(float *data, int length) {
 
 int peaks(float *data, int length, int currentHead)
 {
-    //TODO
-
-    // note for tri -- when indexing the array, to get the data in the right order you need to add currentHead to the array index mod length.
-    // since data is a circular buffer
-    // we don't do this anywhere else in the file since this is the only place where the order of the data matters.
-     
-    return 0;
+    // data has circular buffer
+    int lag = 5;
+    float z = 3.5;
+    float recent_weight = 0.2; // micro:bit input should be close to stationary data
+   
+    // process data by applying recent_weight
+    float new_data [length] = {};
+    new_data[currentHead%length] = data[currentHead%length];
+    for (int i=0; i<lag; i++) {
+        new_data[(i+currentHead)%length] = data[(i+currentHead)%length];
+    }
+   
+    int peakscounter = 0;
+    int signals [length] = {}; // The same circular indexing as data, for consistency
+   
+    float temp [lag] = {}; // stores the moving window before the current datapoint
+    for (int i=0; i<lag; i++) {
+        temp[i] = new_data[(i+currentHead)%length];
+    }
+   
+    for (int i=lag; i<length; i++) {
+        int baseline = mean(temp, lag);
+        int tolerance = z*stdDev(temp, lag);
+        if (new_data[(i+currentHead)%length]>baseline+tolerance) {
+            signals[(i+currentHead)%length]=1;
+            peakscounter+=1;
+            new_data[(i+currentHead)%length] = recent_weight*data[(i+currentHead)%length] + (1-recent_weight)*new_data[(i-1+currentHead)%length];
+        }
+        else if (new_data[(i+currentHead)%length]<baseline+tolerance) {
+            signals[(i+currentHead)%length]=-1;
+            peakscounter+=1;
+            new_data[(i+currentHead)%length] = recent_weight*data[(i+currentHead)%length] + (1-recent_weight)*new_data[(i-1+currentHead)%length];
+        }
+        else signals[(i+currentHead)%length]=0;
+        temp[i%lag] = new_data[(i+currentHead)%length];
+    }
+    return peakscounter;
 }
+
 
 float normalize(float x, float max, float min)
 {
