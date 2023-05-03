@@ -32,6 +32,8 @@ public:
     int classify(ProcessedData data);
     NormData *normData;
 
+    int numOutputs;
+
 private:
     uint8_t *arena;
     ModelHeader *header;
